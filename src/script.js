@@ -8,8 +8,8 @@ const main = () => {
   };
 
   const buildURL = async () => {
-    const { page } = await chrome.storage.sync.get("page");
-    const { append } = await chrome.storage.sync.get("append");
+    const { page = "TODAY" } = await chrome.storage.sync.get("page");
+    const { append = "true" } = await chrome.storage.sync.get("append");
     const tab = await getCurrentTab();
 
     // chrome.scripting.executeScript is different from Firefox
@@ -20,7 +20,7 @@ const main = () => {
 
     let url;
     if (page === "cursor") {
-      url = `logseq://x-callback-url/quickCapture?page=""&append=false&title=${encodeURIComponent(
+      url = `logseq://x-callback-url/quickCapture?append=false&title=${encodeURIComponent(
         tab.title,
       )}&content=${encodeURIComponent(result ? result : "")}&url=${encodeURIComponent(tab.url)}`;
     } else {
